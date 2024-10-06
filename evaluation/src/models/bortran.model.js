@@ -9,7 +9,7 @@ const btranSchema = new Schema({
     }],
     borrowdate: {
         type: Date,
-        default: date.now()
+        default: Date.now()
     },
     duedate: {
         type: Date, required: true

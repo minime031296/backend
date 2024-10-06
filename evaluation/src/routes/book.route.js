@@ -12,7 +12,6 @@ bookRouter.get('/books',async(req, res) => {
         message: "List of books",
         books: books
     })
-
 })
 
 bookRouter.post('/books', checkRole(['admin']),async(req, res) => {

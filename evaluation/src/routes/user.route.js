@@ -9,12 +9,12 @@ userRouter.get('/users', checkRole(['admin']),async(req, res) => {
     res.status(200).json({
         success: true,
         message: "List of Users",
-        user: users
+        users
     })
 
 })
 
-userRouter.get('/users/:id', checkRole(['admin', 'member']),async(req, res) => {
+userRouter.get('/users/:id', checkRole(['admin']),async(req, res) => {
     const id = req.params.id
     const users = await User.findById(id)
     res.status(200).json({

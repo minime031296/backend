@@ -1,12 +1,23 @@
-function checkRole(reqrole) {
-    return async(req, res, next) => {
-    const userRole = req.user.roles.map(role => role.name)
-    const hashRole = reqrole.some(role => userRole.includes(role))
+function checkRole(allowedRoles) {
+    return async (req, res, next) => {
+        // Ensure req.user exists
+        if (!req.user || !req.user.roles) {
+            return res.status(403).json({ success: false, message: 'User not authenticated' });
+        }
 
-    if(!hashRole) {
-        return res.json('Role not provided')
-    }
-    next()
+        // Extract user roles
+        const userRoles = req.user.roles.map(role => role.name);
+
+        // Check if the user has any of the allowed roles
+        const hasRole = allowedRoles.some(role => userRoles.includes(role));
+
+        if (!hasRole) {
+            return res.status(403).json({ success: false, message: 'Forbidden: Insufficient role' });
+        }
+        
+        // Proceed to the next middleware
+        next();
+    };
 }
-}
-module.exports = checkRole
+
+module.exports = checkRole;

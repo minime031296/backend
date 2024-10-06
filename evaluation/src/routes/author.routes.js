@@ -6,7 +6,7 @@ const Author = require('../models/authors.model')
 const authorRouter = Router()
 
 authorRouter.get('/authors',async(req, res) => {
-    const authors = await Author.find({}).populate('roles')
+    const authors = await Author.find({}).populate('Book')
     res.status(200).json({
         success: true,
         message: "List of authors",
@@ -29,7 +29,7 @@ authorRouter.post('/authors', checkRole(['admin']),async(req, res) => {
     res.status(200).json({
         success: true,
         message: "List of authors",
-        author: author
+        author
     })
 })
 
@@ -39,7 +39,7 @@ authorRouter.get('/authors/:id',async(req, res) => {
     res.status(200).json({
         success: true,
         message: "List of authors",
-        authors: authors
+        authors
     })
 })
 

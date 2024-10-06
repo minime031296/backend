@@ -51,7 +51,7 @@ authRouter.post('/register', async(req, res) => {
 
 authRouter.post('/login', async(req, res) => {
     try {
-        const {email, password, roles} = req.body
+        const {email, password} = req.body
 
         if(!email || !password) {
             return res.status(401).json("All fields are required")
@@ -70,11 +70,11 @@ authRouter.post('/login', async(req, res) => {
         }
 
         const accessToken = jwt.sign({
-            userId: user._id, email: user.email, roles: user.roles 
+            userId: user._id, email: user.email, roles: user.role
         }, process.env.SECRET_KEY, {expiresIn: '15min'})
 
         const refreshToken = jwt.sign({
-            userId: user._id, email: user.email, roles:user.roles
+            userId: user._id, email: user.email, roles:user.role
         }, process.env.SECRET_KEY, {expiresIn: '2days'})
 
         
